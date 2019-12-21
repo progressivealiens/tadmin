@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Tadmin</string>
+
+    <string name="text_check_network">No Internet Connection Found.Please Check Your Internet Connection</string>
+    <string name="image">image</string>
+    <string name="navigation_drawer_open">Open</string>
+    <string name="navigation_drawer_close">Close</string>
+
+
+    <string name="attendance_at_fingertip"><u>Access your business on Fingertip</u></string>
+    <string name="powered_by_trackkers_com">Powered by Trackkers.com</string>
+    <string name="tadmin"><b>Tadmin</b></string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="login">Login</string>
+    <string name="search">Search</string>
+    <string name="select_category">Select Designation</string>
+    <string name="please_select_designation">Please Select any designation</string>
+
+    <string name="success">success</string>
+    <string name="bad_request">Bad Request!! Please retry.</string>
+    <string name="network_busy">Network Busy.</string>
+    <string name="not_found">Resource Not Found.</string>
+    <string name="something_went_wrong">Something went heywire!! please retry.</string>
+    <string name="title_activity_live_tracking">Map</string>
+
+    <string name="test_email" translatable="false">techsaltsolutions@gmail.com</string>
+    <string name="test_password" translatable="false">track@123</string>
+    <string name="title_activity_tracking_history">Map</string>
+    <string name="site_name"><b><u>Site Name :-</u></b></string>
+    <string name="status"><b><u>Status :-</u></b></string>
+    <string name="visit_start_time"><b><u>Visit Start Time :-</u></b></string>
+    <string name="visit_end_time"><b><u>Visit End Time :-</u></b></string>
+    <string name="visit_strat_address"><b><u>Visit Start Address :- </u></b></string>
+    <string name="visit_end_address"><b><u>Visit End Address :- </u></b></string>
+    <string name="view_survey_n_report">View Survey \nReport (DAR)</string>
+
+</resources>

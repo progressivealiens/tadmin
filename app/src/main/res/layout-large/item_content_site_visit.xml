@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_20"
+        app:cardCornerRadius="@dimen/dp_10"
+        app:cardElevation="0dp"
+        app:cardMaxElevation="0dp"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:id="@+id/lin_root"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorBlueShade"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/dp_10">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight=".4">
+
+                    <com.techsalt.tadmin.customviews.MyTextview
+                        android:id="@+id/tv_site_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_05"
+                        android:textColor="@color/colorWhite"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/colorWhite"/>
+
+                    <com.techsalt.tadmin.customviews.MyTextview
+                        android:id="@+id/tv_site_visit_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_05"
+                        android:textColor="@color/colorWhite"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+
+                    <View
+                        android:id="@+id/view_start_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/colorWhite"/>
+
+                    <com.techsalt.tadmin.customviews.MyTextview
+                        android:id="@+id/tv_visit_start_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_05"
+                        android:textColor="@color/colorWhite"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+
+                    <View
+                        android:id="@+id/view_end_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/colorWhite"/>
+
+                    <com.techsalt.tadmin.customviews.MyTextview
+                        android:id="@+id/tv_visit_end_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_05"
+                        android:textColor="@color/colorWhite"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorWhite"
+                    android:layout_marginEnd="@dimen/dp_05"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight=".6">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/iv_site_start_selfie"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorWhite"/>
+
+            <com.techsalt.tadmin.customviews.MyTextview
+                android:id="@+id/tv_visit_start_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_10"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <View
+                android:id="@+id/view_visit_end_address"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorWhite"/>
+
+            <com.techsalt.tadmin.customviews.MyTextview
+                android:id="@+id/tv_visit_end_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_10"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/dp_05"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <com.techsalt.tadmin.customviews.MyButton
+                    android:id="@+id/btn_view_communication"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/dp_05"
+                    android:layout_weight=".5"
+                    android:background="@drawable/selector_button"
+                    android:text="View Site\nActivity"
+                    android:textColor="@drawable/text_selector"
+                    android:visibility="gone" />
+
+                <com.techsalt.tadmin.customviews.MyButton
+                    android:id="@+id/btn_no_site_activity"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/dp_05"
+                    android:layout_marginEnd="@dimen/dp_05"
+                    android:layout_weight=".5"
+                    android:background="@drawable/selector_button_red"
+                    android:clickable="false"
+                    android:text="No Activity\nPosted"
+                    android:textColor="@drawable/text_selector"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+                <com.techsalt.tadmin.customviews.MyButton
+                    android:id="@+id/btn_view_survey_report"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/dp_05"
+                    android:layout_weight=".5"
+                    android:background="@drawable/button_pressed"
+                    android:clickable="false"
+                    android:text="@string/view_survey_n_report"
+                    android:textColor="@drawable/text_selector_white"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>
