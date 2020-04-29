@@ -31,6 +31,10 @@
 
         </TableRow>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px" />
+
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -475,7 +479,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="horizontal"
-                android:padding="@dimen/dp_10"
+                android:paddingStart="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_10"
+                android:paddingTop="@dimen/dp_05"
+                android:paddingBottom="@dimen/dp_05"
                 android:weightSum="1">
 
                 <com.techsalt.tadmin.customviews.MyButton
@@ -484,10 +491,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".5"
                     android:background="@drawable/selector_button"
-                    android:paddingStart="@dimen/dp_10"
-                    android:paddingEnd="@dimen/dp_10"
-                    android:text="Patrolling History"
-                    android:textColor="@drawable/text_selector" />
+                    android:paddingStart="@dimen/dp_05"
+                    android:text="Guard Patrol List"
+                    android:textColor="@drawable/text_selector"
+                    android:textSize="@dimen/sp_12"/>
 
                 <View
                     android:layout_width="@dimen/dp_10"
@@ -498,11 +505,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".5"
-                    android:text="View Tracking"
+                    android:text="Current Location"
                     android:background="@drawable/selector_button"
                     android:textColor="@drawable/text_selector"
-                    android:paddingStart="@dimen/dp_10"
-                    android:paddingEnd="@dimen/dp_10"/>
+                    android:paddingEnd="@dimen/dp_05"
+                    android:textSize="@dimen/sp_12"/>
             </LinearLayout>
 
         </TableRow>
@@ -511,6 +518,53 @@
             android:layout_width="match_parent"
             android:layout_height="1px" />
 
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/cell_shape">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp_10"
+                android:weightSum="1">
+
+                <com.techsalt.tadmin.customviews.MyButton
+                    android:id="@+id/btn_missed_alarm"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:text="View Missed Alarm"
+                    android:background="@drawable/selector_button"
+                    android:textColor="@drawable/text_selector"
+                    android:paddingStart="@dimen/dp_05"
+                    android:paddingEnd="@dimen/dp_10"
+                    android:textSize="@dimen/sp_12" />
+
+                <!--<View
+                    android:layout_width="@dimen/dp_10"
+                    android:layout_height="match_parent" />
+
+                <com.techsalt.tadmin.customviews.MyButton
+                    android:id="@+id/btn_tracking_history"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:text="Tracking History"
+                    android:background="@drawable/selector_button"
+                    android:textColor="@drawable/text_selector"
+                    android:paddingEnd="@dimen/dp_05"
+                    android:textSize="@dimen/sp_12"/>-->
+            </LinearLayout>
+
+        </TableRow>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px" />
 
     </TableLayout>
 

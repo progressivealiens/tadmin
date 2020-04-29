@@ -2,13 +2,21 @@ package com.techsalt.tadmin.views.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
-import androidx.appcompat.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.techsalt.tadmin.R;
 import com.techsalt.tadmin.customviews.MyButton;
 import com.techsalt.tadmin.helper.CheckNetworkConnection;
@@ -38,10 +46,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     MyButton btnLogin;
     @BindView(R.id.root_login)
     ScrollView rootLogin;
+    @BindView(R.id.iv_trackkers)
+    ImageView ivTrackkers;
+    @BindView(R.id.et_login_admin_email)
+    TextInputEditText etLoginAdminEmail;
+    @BindView(R.id.ti_login_admin_email)
+    TextInputLayout tiLoginAdminEmail;
 
     ApiInterface apiInterface;
     ProgressView progressView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +64,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         initialize();
 
+        getFirebaseToken();
+
+        Log.e("FireBase Token : ", PrefData.readStringPref(PrefData.firebase_token));
     }
 
     private void initialize() {
@@ -62,71 +78,76 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_login:
 
-                if (Validation.nullValidator(etLoginEmail.getText().toString())){
-                    Utils.showSnackBar(rootLogin,"Email Id can't be blank",etLoginEmail,LoginActivity.this);
-                }else if (!Validation.emailValidator(etLoginEmail.getText().toString())){
-                    Utils.showSnackBar(rootLogin,"Please fill the Email Id in proper format",etLoginEmail,LoginActivity.this);
-                }else if(Validation.nullValidator(etLoginPassword.getText().toString())){
-                    Utils.showSnackBar(rootLogin,"Password can't be blank",etLoginPassword,LoginActivity.this);
-                }else if (!Validation.passValidator(etLoginPassword.getText().toString())){
-                    Utils.showSnackBar(rootLogin,"Password must be 6 characters long",etLoginPassword,LoginActivity.this);
-                }else{
-                    connectApiToLogin(etLoginEmail.getText().toString(),etLoginPassword.getText().toString());
+                if (Validation.nullValidator(etLoginEmail.getText().toString())) {
+                    Utils.showSnackBar(rootLogin, "Email Id can't be blank", etLoginEmail, LoginActivity.this);
+                } else if (!Validation.emailValidator(etLoginEmail.getText().toString())) {
+                    Utils.showSnackBar(rootLogin, "Please fill the Email Id in proper format", etLoginEmail, LoginActivity.this);
+                } else if (Validation.nullValidator(etLoginAdminEmail.getText().toString())) {
+                    Utils.showSnackBar(rootLogin, "Email Id can't be blank", etLoginAdminEmail, LoginActivity.this);
+                } else if (!Validation.emailValidator(etLoginAdminEmail.getText().toString())) {
+                    Utils.showSnackBar(rootLogin, "Please fill the Email Id in proper format", etLoginAdminEmail, LoginActivity.this);
+                } else if (Validation.nullValidator(etLoginPassword.getText().toString())) {
+                    Utils.showSnackBar(rootLogin, "Password can't be blank", etLoginPassword, LoginActivity.this);
+                } /*else if (!Validation.passValidator(etLoginPassword.getText().toString())) {
+                    Utils.showSnackBar(rootLogin, "Password must be 6 characters long", etLoginPassword, LoginActivity.this);
+                } */else {
+                    connectApiToLogin(etLoginEmail.getText().toString(),etLoginAdminEmail.getText().toString(), etLoginPassword.getText().toString());
                 }
 
                 break;
         }
-
-
     }
 
-    private void connectApiToLogin(String email,String password) {
+    private void connectApiToLogin(String companyEmail,String adminEmail, String password) {
         if (CheckNetworkConnection.isConnection1(LoginActivity.this, true)) {
             progressView.showLoader();
-            Call<ApiResponse> call = apiInterface.Login(email,password);
+            Call<ApiResponse> call = apiInterface.Login(
+                    PrefData.readStringPref(PrefData.firebase_token),
+                    companyEmail,
+                    adminEmail,
+                    password
+            );
             call.enqueue(new Callback<ApiResponse>() {
                 @Override
                 public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                     progressView.hideLoader();
                     try {
+                        if (response.body()!=null && response.body().getStatus()!=null){
+                            if (response.body().getStatus().equalsIgnoreCase(getString(R.string.success))) {
 
-                        if (response.body().getStatus().equalsIgnoreCase(getString(R.string.success))) {
+                                PrefData.writeBooleanPref(PrefData.PREF_LOGINSTATUS, true);
+                                PrefData.writeStringPref(PrefData.PREF_Company_name, response.body().getCompanyName());
+                                PrefData.writeStringPref(PrefData.company_logo, response.body().getCompanyLogo());
+                                PrefData.writeStringPref(PrefData.PREF_Company_email, companyEmail);
+                                PrefData.writeStringPref(PrefData.PREF_admin_email, adminEmail);
+                                PrefData.writeStringPref(PrefData.admin_id,String.valueOf(response.body().getAdminId()));
+                                Utils.showToast(LoginActivity.this, getResources().getString(R.string.login_success), Toast.LENGTH_SHORT, getResources().getColor(R.color.colorLightGreen), getResources().getColor(R.color.colorWhite));
 
-                            PrefData.writeBooleanPref(PrefData.PREF_LOGINSTATUS, true);
-
-
-                            /*String companyName=;
-                            String firstLetterOfCompanyName=companyName.substring(0,1).toUpperCase();
-                            companyName=companyName.substring(1);
-
-                            String finalCompanyName=firstLetterOfCompanyName+companyName;*/
-                            PrefData.writeStringPref(PrefData.PREF_Company_name,response.body().getCompanyName());
-                            PrefData.writeStringPref(PrefData.company_logo,response.body().getCompanyLogo());
-
-                            Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-
-                            startActivity(new Intent(LoginActivity.this,MainActivity.class));
-                            finish();
-                        } else {
-                            Utils.showSnackBar(rootLogin, response.body().getMsg(), LoginActivity.this);
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                            } else {
+                                Utils.showSnackBar(rootLogin, response.body().getMsg(), LoginActivity.this);
+                            }
                         }
 
                     } catch (Exception e) {
                         if (response.code() == 400) {
-                            Toast.makeText(LoginActivity.this, R.string.bad_request, Toast.LENGTH_SHORT).show();
+                            Utils.showToast(LoginActivity.this, getResources().getString(R.string.bad_request), Toast.LENGTH_SHORT, getResources().getColor(R.color.colorPink), getResources().getColor(R.color.colorWhite));
                         } else if (response.code() == 500) {
-                            Toast.makeText(LoginActivity.this, R.string.network_busy, Toast.LENGTH_SHORT).show();
+                            Utils.showToast(LoginActivity.this, getResources().getString(R.string.network_busy), Toast.LENGTH_SHORT, getResources().getColor(R.color.colorPink), getResources().getColor(R.color.colorWhite));
                         } else if (response.code() == 404) {
-                            Toast.makeText(LoginActivity.this, R.string.not_found, Toast.LENGTH_SHORT).show();
+                            Utils.showToast(LoginActivity.this, getResources().getString(R.string.not_found), Toast.LENGTH_SHORT, getResources().getColor(R.color.colorPink), getResources().getColor(R.color.colorWhite));
                         } else {
-                            Toast.makeText(LoginActivity.this, R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
+                            Utils.showToast(LoginActivity.this, getResources().getString(R.string.something_went_wrong), Toast.LENGTH_SHORT, getResources().getColor(R.color.colorPink), getResources().getColor(R.color.colorWhite));
                         }
                         e.printStackTrace();
                     }
-
                 }
 
                 @Override
@@ -136,10 +157,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
             });
         }
-
-
-
-
     }
+
+    public void getFirebaseToken() {
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (task.isSuccessful()) {
+                            String token = task.getResult().getToken();
+                            PrefData.writeStringPref(PrefData.firebase_token, token);
+                            Log.e("FireBase Token : ", token);
+                        } else {
+                            Log.e("FireBase TokenFail", "getInstanceId failed", task.getException());
+                            return;
+                        }
+                    }
+                });
+    }
+
 
 }

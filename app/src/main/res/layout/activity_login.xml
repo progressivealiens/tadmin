@@ -7,7 +7,6 @@
     android:background="@color/colorWhite"
     android:fillViewport="true">
 
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,7 +20,6 @@
             android:padding="@dimen/dp_40"
             android:src="@drawable/t_admin_logo" />
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,7 +29,6 @@
             android:padding="@dimen/dp_15">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/ti_login_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
@@ -49,6 +46,31 @@
                     android:drawableStart="@drawable/ic_email_black_24dp"
                     android:fontFamily="@font/aver_bold"
                     android:hint="@string/email"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:textColorHint="@color/colorBlack"
+                    android:textSize="@dimen/sp_15" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ti_login_admin_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:theme="@style/TextLabel"
+                app:errorEnabled="true"
+                app:errorTextAppearance="@style/ErrorText"
+                app:hintEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_login_admin_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:drawablePadding="@dimen/dp_10"
+                    android:drawableStart="@drawable/ic_email_black_24dp"
+                    android:fontFamily="@font/aver_bold"
+                    android:hint="@string/admin_email"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:textColorHint="@color/colorBlack"

@@ -107,13 +107,13 @@ public class GuardAttendanceActivity extends AppCompatActivity implements View.O
 
                     } catch (Exception e) {
                         if (response.code() == 400) {
-                            Toast.makeText(GuardAttendanceActivity.this, "Bad Request!! Please retry.", Toast.LENGTH_SHORT).show();
+                            Utils.showToast(GuardAttendanceActivity.this,getResources().getString(R.string.bad_request),Toast.LENGTH_SHORT,getResources().getColor(R.color.colorPink),getResources().getColor(R.color.colorWhite));
                         } else if (response.code() == 500) {
-                            Toast.makeText(GuardAttendanceActivity.this, "Network Busy.", Toast.LENGTH_SHORT).show();
+                            Utils.showToast(GuardAttendanceActivity.this,getResources().getString(R.string.network_busy),Toast.LENGTH_SHORT,getResources().getColor(R.color.colorPink),getResources().getColor(R.color.colorWhite));
                         } else if (response.code() == 404) {
-                            Toast.makeText(GuardAttendanceActivity.this, "Resource Not Found.", Toast.LENGTH_SHORT).show();
+                            Utils.showToast(GuardAttendanceActivity.this,getResources().getString(R.string.not_found),Toast.LENGTH_SHORT,getResources().getColor(R.color.colorPink),getResources().getColor(R.color.colorWhite));
                         } else {
-                            Toast.makeText(GuardAttendanceActivity.this, "Something went heywire!! please retry.", Toast.LENGTH_SHORT).show();
+                            Utils.showToast(GuardAttendanceActivity.this,getResources().getString(R.string.something_went_wrong),Toast.LENGTH_SHORT,getResources().getColor(R.color.colorPink),getResources().getColor(R.color.colorWhite));
                         }
                         e.printStackTrace();
 

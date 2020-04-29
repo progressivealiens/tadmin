@@ -8,6 +8,7 @@ public class ApiResponse {
     private String msg;
     private String companyName;
     private String companyLogo;
+    private int adminId;
     private List<DataBean> data;
 
     public String getStatus() {
@@ -50,6 +51,14 @@ public class ApiResponse {
         this.companyLogo = companyLogo;
     }
 
+    public int getAdminId() {
+        return adminId;
+    }
+
+    public void setAdminId(int adminId) {
+        this.adminId = adminId;
+    }
+
     public static class DataBean {
 
         private String name;
@@ -82,10 +91,12 @@ public class ApiResponse {
         private String mobile;
         private double latitude;
         private double longitude;
-
+        private String level;
         private List<RoutePatrolBean> routePatrol;
         private List<CommunicationsListDataBean> communicationsListData;
         private List<QrCodeScanVisitListBean> qrCodeScanVisitList;
+        private List<MissedAlarmBean> missedAlarm;
+
 
         public String getCategoryName() {
             return categoryName;
@@ -359,6 +370,22 @@ public class ApiResponse {
             this.routePatrol = routePatrol;
         }
 
+        public List<MissedAlarmBean> getMissedAlarm() {
+            return missedAlarm;
+        }
+
+        public void setMissedAlarm(List<MissedAlarmBean> missedAlarm) {
+            this.missedAlarm = missedAlarm;
+        }
+
+        public String getLevel() {
+            return level;
+        }
+
+        public void setLevel(String level) {
+            this.level = level;
+        }
+
         public static class CommunicationsListDataBean {
             /**
              * text :
@@ -426,19 +453,29 @@ public class ApiResponse {
         }
 
         public static class QrCodeScanVisitListBean {
-            /**
-             * vpmuid : 230
-             * qrType : checkpoint
-             * qrName : Head office
-             * scanSelfie : xmua3YC.png
-             * timeStamp : 2019-12-15 22:51:38
-             */
+            public QrCodeScanVisitListBean(String siteName,int vpmuid, String qrType, String qrName, String scanSelfie, String timeStamp) {
+                this.siteName=siteName;
+                this.vpmuid = vpmuid;
+                this.qrType = qrType;
+                this.qrName = qrName;
+                this.scanSelfie = scanSelfie;
+                this.timeStamp = timeStamp;
+            }
 
+            private String siteName;
             private int vpmuid;
             private String qrType;
             private String qrName;
             private String scanSelfie;
             private String timeStamp;
+
+            public String getSiteName() {
+                return siteName;
+            }
+
+            public void setSiteName(String siteName) {
+                this.siteName = siteName;
+            }
 
             public int getVpmuid() {
                 return vpmuid;
@@ -538,5 +575,23 @@ public class ApiResponse {
                 this.created_at = created_at;
             }
         }
+
+        public static class MissedAlarmBean {
+            /**
+             * time : 2020-01-10 14:24:05
+             */
+
+            private String time;
+
+            public String getTime() {
+                return time;
+            }
+
+            public void setTime(String time) {
+                this.time = time;
+            }
+        }
+
     }
+
 }

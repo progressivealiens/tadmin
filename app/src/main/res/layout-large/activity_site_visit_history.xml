@@ -54,7 +54,6 @@
         app:errorTextAppearance="@style/ErrorText"
         app:hintEnabled="true"
         android:visibility="gone"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:boxStrokeColor="@color/colorPrimaryDark">
 
         <com.google.android.material.textfield.TextInputEditText

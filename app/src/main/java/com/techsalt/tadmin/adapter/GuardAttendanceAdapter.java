@@ -23,6 +23,8 @@ import com.techsalt.tadmin.customviews.MyTextview;
 import com.techsalt.tadmin.helper.PrefData;
 import com.techsalt.tadmin.helper.Utils;
 import com.techsalt.tadmin.views.activity.LiveTrackingActivity;
+import com.techsalt.tadmin.views.activity.LoginActivity;
+import com.techsalt.tadmin.views.activity.TrackingHistoryGuardActivity;
 import com.techsalt.tadmin.webapi.ApiResponse;
 
 import java.util.ArrayList;
@@ -36,6 +38,9 @@ public class GuardAttendanceAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     Context context;
     List<ApiResponse.DataBean> guardAttendanceModels = new ArrayList<>();
     List<ApiResponse.DataBean.RoutePatrolBean> patrollingBeans = new ArrayList<>();
+    List<ApiResponse.DataBean.MissedAlarmBean> missedAlarmBeans = new ArrayList<>();
+
+    String checkInTime = "", checkOutTime = "", checkinDate = "", checkoutDate = "", dutyHours;
 
     public GuardAttendanceAdapter(Context context, List<ApiResponse.DataBean> guardAttendanceModels) {
         this.context = context;
@@ -99,32 +104,80 @@ public class GuardAttendanceAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             @Override
             public void onClick(View v) {
 
-                if (holder.btnViewTracking.getText().toString().equalsIgnoreCase("VIEW TRACKING")) {
+                if (holder.btnViewTracking.getText().toString().equalsIgnoreCase("CURRENT LOCATION")) {
                     PrefData.writeStringPref(PrefData.emp_Id, String.valueOf(guardAttendanceModels.get(i).getEmployeeId()));
 
                     Intent intent = new Intent(context, LiveTrackingActivity.class);
                     intent.putExtra(LiveTrackingActivity.callingActivity, "guard");
                     context.startActivity(intent);
                 } else {
-                    Toast.makeText(context, "Guard Checked Out", Toast.LENGTH_SHORT).show();
+                    Utils.showToast(context,context.getResources().getString(R.string.guard_checked_out),Toast.LENGTH_SHORT,context.getResources().getColor(R.color.colorPink),context.getResources().getColor(R.color.colorWhite));
                 }
             }
         });
 
+        /*holder.btnTrackingHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                PrefData.writeStringPref(PrefData.emp_Id, String.valueOf(guardAttendanceModels.get(i).getEmployeeId()));
+                checkInTime = (guardAttendanceModels.get(i).getCheckInTime()).substring(10, 19).trim();
+                checkinDate = (guardAttendanceModels.get(i).getCheckInTime()).substring(0, 10).trim();
+
+                if (holder.tvCheckoutBattery.getText().toString().equalsIgnoreCase("On Work")) {
+                    PrefData.writeStringPref(PrefData.checkout_time, "On Work");
+
+                    String currentDate = Utils.selectedDate(Long.valueOf(Utils.currentTimeStamp()));
+                    PrefData.writeStringPref(PrefData.checkout_date, currentDate);
+                } else {
+                    checkOutTime = guardAttendanceModels.get(i).getCheckOutTime().substring(10, 19).trim();
+                    checkoutDate = guardAttendanceModels.get(i).getCheckOutTime().substring(0, 10).trim();
+                    PrefData.writeStringPref(PrefData.checkout_time, checkOutTime);
+                    PrefData.writeStringPref(PrefData.checkout_date, checkoutDate);
+                }
+
+                PrefData.writeStringPref(PrefData.checkin_time, checkInTime);
+                PrefData.writeStringPref(PrefData.checkin_date, checkinDate);
+                PrefData.writeStringPref(PrefData.emp_name, guardAttendanceModels.get(i).getName());
+                PrefData.writeStringPref(PrefData.checkin_image, guardAttendanceModels.get(i).getStartImageName());
+
+                Intent intent = new Intent(context, TrackingHistoryGuardActivity.class);
+                context.startActivity(intent);
+            }
+        });*/
+
         holder.btnPatrollingHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (guardAttendanceModels.get(i).getRoutePatrol().size()>0){
+                if (guardAttendanceModels.get(i).getRoutePatrol().size() > 0) {
 
                     patrollingBeans.clear();
                     patrollingBeans.addAll(guardAttendanceModels.get(i).getRoutePatrol());
                     openDialogToViewPatrollingHistory();
 
-                }else{
-                    Toast.makeText(context, "No Qr Petrol History Found.", Toast.LENGTH_LONG).show();
+                } else {
+                    Utils.showToast(context,context.getResources().getString(R.string.no_qr_patrol_histroty_found),Toast.LENGTH_SHORT,context.getResources().getColor(R.color.colorPink),context.getResources().getColor(R.color.colorWhite));
                 }
             }
         });
+
+        holder.btnMissedAlarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (guardAttendanceModels.get(i).getMissedAlarm().size()>0){
+                    missedAlarmBeans.clear();
+                    missedAlarmBeans.addAll(guardAttendanceModels.get(i).getMissedAlarm());
+
+                    openDialogToViewMissedAlarm();
+
+                }else{
+                    Utils.showToast(context,context.getResources().getString(R.string.no_missed_alarms),Toast.LENGTH_SHORT,context.getResources().getColor(R.color.colorLightGreen),context.getResources().getColor(R.color.colorWhite));
+                }
+
+            }
+        });
+
     }
 
     private void openDialogToViewPatrollingHistory() {
@@ -165,6 +218,48 @@ public class GuardAttendanceAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         });
         dialog.show();
     }
+
+
+    private void openDialogToViewMissedAlarm() {
+
+        final Dialog dialog = new Dialog(context);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.dialog_guard_missed_alarm);
+
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(displaymetrics);
+        int width = (int) (displaymetrics.widthPixels * 0.9);
+        int height = (int) (displaymetrics.heightPixels * 0.9);
+        dialog.getWindow().setLayout(width, height);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
+        MyButton btnDone = dialog.findViewById(R.id.btn_done);
+        MyTextview emptyView = dialog.findViewById(R.id.tv_empty);
+        RecyclerView guardMissedAlarmRecycler = dialog.findViewById(R.id.recycler_guard_missed_alarm);
+        GuardMissedAlarm mAdapter;
+
+        if (missedAlarmBeans.size() == 0) {
+            emptyView.setVisibility(View.VISIBLE);
+            emptyView.setText("No Missed Alarms To Show.");
+            guardMissedAlarmRecycler.setVisibility(View.GONE);
+        } else {
+            emptyView.setVisibility(View.GONE);
+            LinearLayoutManager manager = new LinearLayoutManager(context);
+            guardMissedAlarmRecycler.setLayoutManager(manager);
+            mAdapter = new GuardMissedAlarm(missedAlarmBeans,context);
+            guardMissedAlarmRecycler.setAdapter(mAdapter);
+            mAdapter.notifyDataSetChanged();
+        }
+        btnDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
 
     private void openDialogToViewImage(String image) {
         final Dialog dialog = new Dialog(context);
@@ -225,6 +320,10 @@ public class GuardAttendanceAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         MyButton btnViewTracking;
         @BindView(R.id.btn_patrolling_history)
         MyButton btnPatrollingHistory;
+        /*@BindView(R.id.btn_tracking_history)
+        MyButton btnTrackingHistory;*/
+        @BindView(R.id.btn_missed_alarm)
+        MyButton btnMissedAlarm;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

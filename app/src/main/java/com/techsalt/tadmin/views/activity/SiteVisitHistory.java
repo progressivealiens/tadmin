@@ -84,7 +84,6 @@ public class SiteVisitHistory extends AppCompatActivity implements View.OnClickL
         ButterKnife.bind(this);
 
         initialization();
-
     }
 
     private void initialization() {
@@ -137,7 +136,6 @@ public class SiteVisitHistory extends AppCompatActivity implements View.OnClickL
 
                 break;
         }
-
     }
 
     private void connectApiToGetSiteVisitDetails() {
@@ -233,7 +231,7 @@ public class SiteVisitHistory extends AppCompatActivity implements View.OnClickL
                         mAdapter.notifyDataSetChanged();
 
                     } else {
-                        Toast.makeText(SiteVisitHistory.this, response.body().getMsg(), Toast.LENGTH_SHORT).show();
+                        Utils.showToast(SiteVisitHistory.this,response.body().getMsg(),Toast.LENGTH_SHORT,getResources().getColor(R.color.colorPink),getResources().getColor(R.color.colorWhite));
                     }
                 }
 

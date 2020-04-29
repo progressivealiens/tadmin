@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_10">
+
+    <com.techsalt.tadmin.customviews.MyTextview
+        android:id="@+id/tv_serial_no"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/sp_13"
+        android:textStyle="bold"
+        android:gravity="center"/>
+
+    <com.techsalt.tadmin.customviews.MyTextview
+        android:id="@+id/tv_time_missed_alarm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/sp_13"
+        android:textStyle="bold"
+        android:gravity="center"/>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimaryDark"
+        android:layout_marginTop="@dimen/dp_10"/>
+
+</LinearLayout>

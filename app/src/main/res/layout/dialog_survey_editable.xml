@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <com.techsalt.tadmin.customviews.MyTextview
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorLightCyan"
+            android:gravity="center"
+            android:padding="@dimen/dp_10"
+            android:text="@string/dar_edit_site_survey_here"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/sp_17"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_site_survey_report"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <com.techsalt.tadmin.customviews.MyButton
+            android:id="@+id/btn_update"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_10"
+            android:layout_weight=".5"
+            android:background="@drawable/selector_button"
+            android:text="@string/send_mail"
+            android:textColor="@drawable/text_selector" />
+
+
+        <com.techsalt.tadmin.customviews.MyButton
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_10"
+            android:layout_weight=".5"
+            android:background="@drawable/selector_button"
+            android:text="@string/cancel_mail"
+            android:textColor="@drawable/text_selector" />
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

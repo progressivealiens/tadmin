@@ -10,12 +10,20 @@
 
     <color name="colorLightCyan">#D42A5D68</color>
     <color name="colorDarkGrey">#797979</color>
+    <color name="colorMediumGrey">#a2a2a2</color>
     <color name="colorGrey">#e8e8e8</color>
     <color name="colorRed">#FE3A2F</color>
     <color name="colorBloodRed">#CE0900</color>
     <color name="colorGreen">#1A9B10</color>
-    <color name="colorLightRed">#ff4c4c</color>
-    <color name="colorMediumRed">#ff6666</color>
+    <color name="colorMediumRed">#FF6666</color>
     <color name="colorBlueShade">#30839f</color>
+    <color name="colorPink">#F5346E</color>
+    <color name="colorLightGreen">#FF4FD20E</color>
+    <color name="colorPinkLight">#80F7D9E1</color>
+    <color name="colorLightGrey">#e8e8e8</color>
+
+
+    <color name="colorGolden">#DAA520</color>
+    <color name="colorGold">#FFD600</color>
 
 </resources>

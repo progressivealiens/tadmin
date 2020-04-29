@@ -2,15 +2,6 @@ package com.techsalt.tadmin.adapter;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
-import android.text.Html;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
-import android.text.style.AbsoluteSizeSpan;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.RelativeSizeSpan;
-import android.text.style.StyleSpan;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,16 +9,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.squareup.picasso.Picasso;
 import com.techsalt.tadmin.R;
 import com.techsalt.tadmin.customviews.MyButton;
 import com.techsalt.tadmin.customviews.MyTextview;
 import com.techsalt.tadmin.helper.Utils;
+import com.techsalt.tadmin.interfaces.ToNotifyAdapterButtonClicked;
 import com.techsalt.tadmin.model.SiteVisitChildren;
 import com.techsalt.tadmin.model.SiteVisitParent;
 import com.techsalt.tadmin.model.SubChildrenCommunication;
@@ -36,7 +28,9 @@ import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter;
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder;
 import com.thoughtbot.expandablerecyclerview.viewholders.GroupViewHolder;
+
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -118,7 +112,7 @@ public class SiteVisitAdapter extends ExpandableRecyclerViewAdapter<SiteVisitAda
             holder1.tvSiteName.setText(context.getResources().getString(R.string.site_name) + child.getSiteName());
             holder1.tvSiteVisitStatus.setText(context.getResources().getString(R.string.status) + child.getMsg());
             holder1.linRoot.setBackgroundColor(context.getResources().getColor(R.color.colorMediumRed));
-            Picasso.get().load(R.drawable.no_image_available).into(holder1.ivSiteStartSelfie);
+            Picasso.get().load(R.drawable.no_image_posted).into(holder1.ivSiteStartSelfie);
         }
 
         if (((SiteVisitParent) group).getItems().get(childIndex).getSubChildrenCommunications().size() > 0) {
@@ -144,7 +138,7 @@ public class SiteVisitAdapter extends ExpandableRecyclerViewAdapter<SiteVisitAda
             holder1.btnViewSurveyReport.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    openDialogToShowSurveyData(context, ((SiteVisitParent) group).getItems().get(childIndex).getSurveyResponse());
+                    openDialogToShowSurveyData(context, ((SiteVisitParent) group).getItems().get(childIndex).getSurveyResponse(), child.getSuid(), ((SiteVisitParent) group).getEuid());
                 }
             });
 
@@ -189,34 +183,87 @@ public class SiteVisitAdapter extends ExpandableRecyclerViewAdapter<SiteVisitAda
 
     }
 
-    private void openDialogToShowSurveyData(Context context, List<SurveyResponseBean> surveyResponse) {
+    private void openDialogToShowSurveyData(Context context, List<SurveyResponseBean> surveyResponse, String siteId, String empId) {
         final Dialog dialog = new Dialog(context);
         dialog.setCancelable(false);
         dialog.setContentView(R.layout.dialog_survey);
 
         DisplayMetrics displaymetrics = new DisplayMetrics();
         ((AppCompatActivity) context).getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        int width = (int) (displaymetrics.widthPixels * 0.9);
+        int width = displaymetrics.widthPixels;
         int height = (int) (displaymetrics.heightPixels * 0.7);
         dialog.getWindow().setLayout(width, height);
 
         RecyclerView recyclerSiteSurveyReport;
         SurveyReportAdapter mAdapter;
-        MyButton btnDone;
+        final MyButton btnDone, sendMail;
 
         recyclerSiteSurveyReport = dialog.findViewById(R.id.recycler_site_survey_report);
         btnDone = dialog.findViewById(R.id.btn_done);
+        sendMail = dialog.findViewById(R.id.btn_send_mail);
 
         LinearLayoutManager manager = new LinearLayoutManager(context);
         recyclerSiteSurveyReport.setLayoutManager(manager);
-        mAdapter = new SurveyReportAdapter(context, surveyResponse);
+        mAdapter = new SurveyReportAdapter(recyclerSiteSurveyReport, context, surveyResponse, false);
         recyclerSiteSurveyReport.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
 
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        sendMail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                openDialogToShowSurveyDataEditable(context, surveyResponse, siteId, empId);
+            }
+        });
+
+        dialog.show();
+    }
+
+    private void openDialogToShowSurveyDataEditable(Context context, List<SurveyResponseBean> surveyResponse, String suid, String empid) {
+        final Dialog dialog = new Dialog(context);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.dialog_survey_editable);
+
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        ((AppCompatActivity) context).getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        int width = displaymetrics.widthPixels;
+        int height = (int) (displaymetrics.heightPixels * 0.7);
+        dialog.getWindow().setLayout(width, height);
+
+        RecyclerView recyclerSiteSurveyReport;
+        SurveyReportAdapter mAdapter;
+        MyButton btnUpdate, btnCancel;
+        ToNotifyAdapterButtonClicked buttonListener;
+
+        recyclerSiteSurveyReport = dialog.findViewById(R.id.recycler_site_survey_report);
+        btnUpdate = dialog.findViewById(R.id.btn_update);
+        btnCancel = dialog.findViewById(R.id.btn_cancel);
+
+        LinearLayoutManager manager = new LinearLayoutManager(context);
+        recyclerSiteSurveyReport.setLayoutManager(manager);
+        mAdapter = new SurveyReportAdapter(recyclerSiteSurveyReport, context, surveyResponse, true);
+        recyclerSiteSurveyReport.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
+        buttonListener = mAdapter;
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 dialog.cancel();
+            }
+        });
+
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buttonListener.onButtonClicked(dialog, suid, empid);
             }
         });
 
@@ -230,12 +277,12 @@ public class SiteVisitAdapter extends ExpandableRecyclerViewAdapter<SiteVisitAda
 
         DisplayMetrics displaymetrics = new DisplayMetrics();
         ((AppCompatActivity) context).getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        int width = (int) (displaymetrics.widthPixels );
-        int height = (int) (displaymetrics.heightPixels );
+        int width = displaymetrics.widthPixels;
+        int height = displaymetrics.heightPixels;
         dialog.getWindow().setLayout(width, height);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         Button btnDone;
-        ImageView zoomedImage=dialog.findViewById(R.id.iv_selfie);
+        ImageView zoomedImage = dialog.findViewById(R.id.iv_selfie);
         btnDone = dialog.findViewById(R.id.btn_done);
         Picasso.get().load(image).placeholder(R.drawable.progress_image).placeholder(R.drawable.progress_animation).into(zoomedImage);
 
@@ -251,27 +298,26 @@ public class SiteVisitAdapter extends ExpandableRecyclerViewAdapter<SiteVisitAda
 
     @Override
     public void onBindGroupViewHolder(ParentViewHolder holder, int flatPosition, ExpandableGroup group) {
-
         ParentViewHolder holder1 = holder;
+
+        boolean isVisitFoundTotal = false;
+
+        for (int i = 0; i < ((SiteVisitParent) group).getItems().size(); i++) {
+            if (!isVisitFoundTotal) {
+                isVisitFoundTotal = ((SiteVisitParent) group).getItems().get(i).isVisitFound();
+            }
+        }
+
+        if (isVisitFoundTotal) {
+            holder1.tvViewAllSites.setBackground(context.getResources().getDrawable(R.drawable.rect_round_textview));
+        } else {
+            holder1.tvViewAllSites.setBackground(context.getResources().getDrawable(R.drawable.rect_round_textview_red));
+        }
 
         holder1.tvFoName.setText("FO Name :- " + ((SiteVisitParent) group).getFieldOfficerName());
         holder1.tvMobileNo.setText("Mobile No :- " + ((SiteVisitParent) group).getMobile());
-        holder1.tvEmpCode.setText("Emplyee Code :- " + ((SiteVisitParent) group).getEmpcode());
+        holder1.tvEmpCode.setText("Employee Code :- " + ((SiteVisitParent) group).getEmpcode());
 
-    }
-
-    public class ParentViewHolder extends GroupViewHolder {
-        @BindView(R.id.tv_fo_name)
-        MyTextview tvFoName;
-        @BindView(R.id.tv_mobile_no)
-        MyTextview tvMobileNo;
-        @BindView(R.id.tv_emp_code)
-        MyTextview tvEmpCode;
-
-        public ParentViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
     }
 
     @Override
@@ -285,6 +331,24 @@ public class SiteVisitAdapter extends ExpandableRecyclerViewAdapter<SiteVisitAda
                     }
                 }
             }
+        }
+    }
+
+    public class ParentViewHolder extends GroupViewHolder {
+        @BindView(R.id.lin_parent)
+        LinearLayout linParent;
+        @BindView(R.id.tv_view_all_sites)
+        MyTextview tvViewAllSites;
+        @BindView(R.id.tv_fo_name)
+        MyTextview tvFoName;
+        @BindView(R.id.tv_mobile_no)
+        MyTextview tvMobileNo;
+        @BindView(R.id.tv_emp_code)
+        MyTextview tvEmpCode;
+
+        public ParentViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 

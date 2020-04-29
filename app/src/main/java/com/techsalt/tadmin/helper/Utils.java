@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.os.BatteryManager;
@@ -42,12 +43,11 @@ import java.util.TimeZone;
 import static android.content.Context.ACTIVITY_SERVICE;
 import static android.os.Process.killProcess;
 
-/**
- * Created by Hp on 2/13/2018.
- */
-
 public class Utils {
-    public static String BASE = "https://www.trackkers.com/api/tadmin/";
+
+    //old Version
+    /*public static String BASE = "https://www.trackkers.com/api/tadmin/";
+    public static String BASE_WEATHER = "https://api.darksky.net/forecast/0e03d69c1ebb304b2fdedd33dbfa4ce5/";
     public static String BASE_COMPANY_LOGO = "https://trackkers.com/public/uploads/companyLogo/";
     public static String BASE_IMAGE = "https://www.trackkers.com/public/storage/operationalCheckInImages/";
     public static String BASE_IMAGE_COMMUNICATION = "https://www.trackkers.com/public/uploads/communication/";
@@ -55,7 +55,32 @@ public class Utils {
     public static String BASE_IMAGE_COMMUNICATION_FO = "https://trackkers.com/public/storage/siteVisitCommunication/";
     public static String BASE_IMAGE_SITE_START_SELFIE = "https://www.trackkers.com/public/storage/siteVisitSelfie/";
     public static String BASE_IMAGE_QR_PETROL_HISTORY = "https://www.trackkers.com/public/storage/siteVisitPresence/";
-    public static String BASE_IMAGE_GUARD_PATROLLING_HISTORY = "https://www.trackkers.com/public/storage/guardScanImage/";
+    public static String BASE_IMAGE_GUARD_PATROLLING_HISTORY = "https://www.trackkers.com/public/storage/guardScanImage/";*/
+
+    //Upcoming Version
+    public static String BASE = "https://www.trackkers.com/api/tadmin/";
+    public static String BASE_WEATHER = "https://api.darksky.net/forecast/0e03d69c1ebb304b2fdedd33dbfa4ce5/";
+    public static String BASE_COMPANY_LOGO = "https://www.trackkers.com/uploads/companyLogo/";
+    public static String BASE_IMAGE = "https://www.trackkers.com/storage/operationalCheckInImages/";
+    public static String BASE_IMAGE_COMMUNICATION = "https://www.trackkers.com/uploads/communication/";
+    public static String BASE_IMAGE_GUARD = "https://www.trackkers.com/storage/guardSelfie/";
+    public static String BASE_IMAGE_COMMUNICATION_FO = "https://www.trackkers.com/storage/siteVisitCommunication/";
+    public static String BASE_IMAGE_SITE_START_SELFIE = "https://www.trackkers.com/storage/siteVisitSelfie/";
+    public static String BASE_IMAGE_QR_PETROL_HISTORY = "https://www.trackkers.com/storage/siteVisitPresence/";
+    public static String BASE_IMAGE_GUARD_PATROLLING_HISTORY = "https://www.trackkers.com/storage/guardScanImage/";
+
+    //current Version
+    /*public static String BASE = "http://15.206.52.166/api/tadmin/";
+    public static String BASE_WEATHER = "https://api.darksky.net/forecast/0e03d69c1ebb304b2fdedd33dbfa4ce5/";
+    public static String BASE_COMPANY_LOGO = "http://15.206.52.166/uploads/companyLogo/";
+    public static String BASE_IMAGE = "http://15.206.52.166/storage/operationalCheckInImages/";
+    public static String BASE_IMAGE_COMMUNICATION = "http://15.206.52.166/uploads/communication/";
+    public static String BASE_IMAGE_GUARD = "http://15.206.52.166/storage/guardSelfie/";
+    public static String BASE_IMAGE_COMMUNICATION_FO = "http://15.206.52.166/storage/siteVisitCommunication/";
+    public static String BASE_IMAGE_SITE_START_SELFIE = "http://15.206.52.166/storage/siteVisitSelfie/";
+    public static String BASE_IMAGE_QR_PETROL_HISTORY = "http://15.206.52.166/storage/siteVisitPresence/";
+    public static String BASE_IMAGE_GUARD_PATROLLING_HISTORY = "http://15.206.52.166/storage/guardScanImage/";*/
+
 
     public static boolean isInternetOn(Activity context) {
         boolean isActive = false;
@@ -80,8 +105,6 @@ public class Utils {
         return isActive;
     }
 
-
-
     public static boolean isLocationServicesEnabled(Context context) {
         LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         boolean gps_enabled = false;
@@ -95,8 +118,6 @@ public class Utils {
 
         return gps_enabled ;
     }
-
-
 
     public void changeStatusBarColor(Activity context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -153,8 +174,13 @@ public class Utils {
         Log.e(key, value);
     }
 
-    public static void toast(Context context, String string) {
-        Toast.makeText(context, string, Toast.LENGTH_SHORT).show();
+    public static void showToast(Context context,String message,int duration,int BackgroundColor,int textColor){
+        Toast toast = Toast.makeText(context, message, duration);
+        View view = toast.getView();
+        view.getBackground().setColorFilter(BackgroundColor, PorterDuff.Mode.SRC_IN);
+        TextView text = view.findViewById(android.R.id.message);
+        text.setTextColor(textColor);
+        toast.show();
     }
 
     public static void showSnackBar(View view, String msg, TextInputEditText textView, Activity activity) {
@@ -207,7 +233,6 @@ public class Utils {
         datePicker.show();
     }
 
-
     public static void showDatePicker(Context context, final MyTextview textview) {
         Calendar cal = Calendar.getInstance(TimeZone.getDefault());
 
@@ -222,7 +247,6 @@ public class Utils {
         datePicker.getDatePicker().setMaxDate(cal.getTimeInMillis());
         datePicker.show();
     }
-
 
     public static void showDatePicker(Context context, final AppCompatEditText editText, String old) {
         final Calendar cal = Calendar.getInstance(TimeZone.getDefault());
@@ -330,5 +354,6 @@ public class Utils {
 
         return parsedDate;
     }
+
 
 }

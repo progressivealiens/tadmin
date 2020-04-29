@@ -16,11 +16,6 @@
         <item name="android:fontFamily">font/aver_bold</item>
     </style>
 
-    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <item name="android:textSize">@dimen/sp_18</item>
-        <item name="android:textColor">@color/colorWhite</item>
-    </style>
-
 
     <style name="DialogFragmentTheme" parent="android:style/Theme.Translucent">
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -49,6 +44,12 @@
     <style name="ErrorText" parent="TextAppearance.AppCompat.Small">
         <item name="android:textStyle">normal|italic</item>
         <item name="android:textColor">@color/colorRed</item>
+    </style>
+
+
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/colorMediumGrey</item>
+        <item name="colorControlActivated">@color/colorGold</item>
     </style>
 
 

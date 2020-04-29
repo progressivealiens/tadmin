@@ -3,22 +3,22 @@ package com.techsalt.tadmin.adapter;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.textfield.TextInputEditText;
 import com.squareup.picasso.Picasso;
 import com.techsalt.tadmin.R;
 import com.techsalt.tadmin.customviews.MyTextview;
 import com.techsalt.tadmin.helper.Utils;
-import com.techsalt.tadmin.views.activity.OperationalAttendanceActivity;
 import com.techsalt.tadmin.webapi.ApiResponse;
 
 import java.util.ArrayList;
@@ -51,22 +51,28 @@ public class OperationsFeedbackAdapter extends RecyclerView.Adapter<RecyclerView
 
         if (feedbackList.get(i).getText().equalsIgnoreCase("")) {
             holder.tvPostText.setVisibility(View.GONE);
-            Picasso.get().load(Utils.BASE_IMAGE_COMMUNICATION + feedbackList.get(i).getImage()).resize(300,300).placeholder(R.drawable.progress_animation).into(holder.ivPostImage);
+            Picasso.get().load(Utils.BASE_IMAGE_COMMUNICATION + feedbackList.get(i).getImage()).resize(300, 300).placeholder(R.drawable.progress_animation).into(holder.ivPostImage);
         } else if (feedbackList.get(i).getImage().equals("")) {
-            holder.ivPostImage.setVisibility(View.GONE);
-            holder.tvPostText.setText("Posted Text : " + feedbackList.get(i).getText());
+            holder.ivPostImage.setVisibility(View.VISIBLE);
+            Picasso.get().load(R.drawable.no_image_posted).placeholder(R.drawable.progress_animation).into(holder.ivPostImage);
+            holder.tvPostText.setText(feedbackList.get(i).getText());
         } else if (!feedbackList.get(i).getImage().equals("") && !feedbackList.get(i).getImage().equals("")) {
-            holder.tvPostText.setText("Posted Text : " + feedbackList.get(i).getText());
-            Picasso.get().load(Utils.BASE_IMAGE_COMMUNICATION + feedbackList.get(i).getImage()).resize(300,300).placeholder(R.drawable.progress_animation).into(holder.ivPostImage);
+            holder.tvPostText.setText(feedbackList.get(i).getText());
+            Picasso.get().load(Utils.BASE_IMAGE_COMMUNICATION + feedbackList.get(i).getImage()).resize(300, 300).placeholder(R.drawable.progress_animation).into(holder.ivPostImage);
         }
 
-        holder.tvPostedFrom.setText("Posted Address : " + feedbackList.get(i).getPostAddress());
-        holder.tvPostedDate.setText("Posted Date & Time : " + feedbackList.get(i).getDate());
+        holder.tvSerialNumber.setText("# "+(i+1));
+        holder.tvPostedFrom.setText(feedbackList.get(i).getPostAddress());
+        holder.tvPostedDate.setText(feedbackList.get(i).getDate());
 
         holder.ivPostImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openDialogToShowImage(Utils.BASE_IMAGE_COMMUNICATION + feedbackList.get(i).getImage());
+                if (feedbackList.get(i).getImage().equals("")){
+                    Utils.showToast(context,context.getResources().getString(R.string.no_image_posted),Toast.LENGTH_SHORT,context.getResources().getColor(R.color.colorLightGreen),context.getResources().getColor(R.color.colorWhite));
+                }else{
+                    openDialogToShowImage(Utils.BASE_IMAGE_COMMUNICATION + feedbackList.get(i).getImage());   
+                }
             }
         });
     }
@@ -78,12 +84,12 @@ public class OperationsFeedbackAdapter extends RecyclerView.Adapter<RecyclerView
 
         DisplayMetrics displaymetrics = new DisplayMetrics();
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        int width = (int) (displaymetrics.widthPixels );
-        int height = (int) (displaymetrics.heightPixels );
+        int width = (int) (displaymetrics.widthPixels);
+        int height = (int) (displaymetrics.heightPixels);
         dialog.getWindow().setLayout(width, height);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         Button btnDone;
-        ImageView zoomedImage=dialog.findViewById(R.id.iv_selfie);
+        ImageView zoomedImage = dialog.findViewById(R.id.iv_selfie);
         btnDone = dialog.findViewById(R.id.btn_done);
         Picasso.get().load(image).placeholder(R.drawable.progress_animation).into(zoomedImage);
 
@@ -102,20 +108,26 @@ public class OperationsFeedbackAdapter extends RecyclerView.Adapter<RecyclerView
         return feedbackList.size();
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.tv_post_text)
-        MyTextview tvPostText;
+        @BindView(R.id.tv_serial_number)
+        MyTextview tvSerialNumber;
+        @BindView(R.id.et_post_text)
+        TextInputEditText tvPostText;
         @BindView(R.id.iv_post_image)
         ImageView ivPostImage;
-        @BindView(R.id.tv_posted_from)
-        MyTextview tvPostedFrom;
-        @BindView(R.id.tv_posted_date)
-        MyTextview tvPostedDate;
+        @BindView(R.id.et_posted_from)
+        TextInputEditText tvPostedFrom;
+        @BindView(R.id.et_posted_date)
+        TextInputEditText tvPostedDate;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
-
 }

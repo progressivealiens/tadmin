@@ -26,7 +26,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
+        <activity android:name=".views.activity.ShowNotificationActivity"></activity>
         <activity
             android:name=".views.activity.SplashActivity"
             android:usesCleartextTraffic="true"
@@ -38,51 +38,65 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".views.activity.SiteVisitHistory"
+        <activity
+            android:name=".views.activity.SiteVisitHistory"
             android:resizeableActivity="false"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".views.activity.LoginActivity"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustNothing"
             android:resizeableActivity="false"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustNothing" />
         <activity
             android:name=".views.activity.OperationalAbsentActivity"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustNothing"
             android:resizeableActivity="false"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustNothing" />
         <activity
-            android:name=".views.activity.TrackingHistoryActivity"
+            android:name=".views.activity.TrackingHistoryOperationsActivity"
             android:label="@string/title_activity_tracking_history"
             android:resizeableActivity="false"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".views.activity.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".views.activity.MainActivity"
             android:resizeableActivity="false"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".views.activity.OperationalAttendanceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".views.activity.OperationalAttendanceActivity"
             android:resizeableActivity="false"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".views.activity.GuardAttendanceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".views.activity.GuardAttendanceActivity"
             android:resizeableActivity="false"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".views.activity.GuardRouteWiseAttendActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".views.activity.GuardRouteWiseAttendActivity"
             android:resizeableActivity="false"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".views.activity.LiveTrackingActivity"
             android:label="@string/title_activity_live_tracking"
             android:resizeableActivity="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".views.activity.TrackingHistoryGuardActivity"
+            android:resizeableActivity="false"
+            android:screenOrientation="portrait" />
 
+        <service
+            android:name=".firebase.FireIDService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".firebase.FireMsgService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
         <meta-data
             android:name="io.fabric.ApiKey"
@@ -90,6 +104,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@mipmap/ic_launcher_main" />
     </application>
 
 </manifest>

@@ -13,35 +13,67 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <com.techsalt.tadmin.customviews.MyTextview
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:padding="@dimen/dp_10"
+            android:text="QR Scan Patrol History"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/sp_16"
+            android:textStyle="bold" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_qr_petrol_history"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
-
+            android:layout_marginTop="@dimen/dp_15"
+            android:layout_weight="1" />
 
         <com.techsalt.tadmin.customviews.MyTextview
             android:id="@+id/tv_empty"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
             android:padding="@dimen/dp_10"
+            android:textColor="@color/colorBlack"
             android:textSize="@dimen/sp_20"
             android:textStyle="bold"
-            android:textColor="@color/colorBlack"
-            android:layout_weight="1"
-            android:visibility="gone"
-            android:gravity="center"/>
+            android:visibility="gone" />
 
-
-        <com.techsalt.tadmin.customviews.MyButton
-            android:id="@+id/btn_done"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_10"
-            android:background="@drawable/selector_button"
-            android:text="DONE"
-            android:textColor="@drawable/text_selector"
-            android:textStyle="bold" />
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <com.techsalt.tadmin.customviews.MyButton
+                android:id="@+id/btn_edit_send_mail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:background="@drawable/selector_button"
+                android:text="@string/compose_mail"
+                android:textColor="@drawable/text_selector"
+                android:textStyle="bold"
+                android:layout_marginEnd="@dimen/dp_05"/>
+
+            <com.techsalt.tadmin.customviews.MyButton
+                android:id="@+id/btn_done"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_05"
+                android:layout_weight=".5"
+                android:background="@drawable/selector_button"
+                android:text="@string/close"
+                android:textColor="@drawable/text_selector"
+                android:textStyle="bold"
+                android:layout_marginStart="@dimen/dp_05"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
@@ -51,7 +52,7 @@ public class GuardRouteWiseAttendActivity extends AppCompatActivity implements V
     @BindView(R.id.btn_guard_attendance)
     MyButton btnGuardAttendance;
     @BindView(R.id.root_guard_attend)
-    LinearLayout rootGuardAttend;
+    CoordinatorLayout rootGuardAttend;
     @BindView(R.id.tv_empty)
     MyTextview tvEmpty;
     @BindView(R.id.et_search_person)
@@ -70,7 +71,6 @@ public class GuardRouteWiseAttendActivity extends AppCompatActivity implements V
 
     String guardRouteId = "", SelectedDate = "", formatSelectedDate = "";
     long timeStamp;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -194,13 +194,13 @@ public class GuardRouteWiseAttendActivity extends AppCompatActivity implements V
 
                     } catch (Exception e) {
                         if (response.code() == 400) {
-                            Toast.makeText(GuardRouteWiseAttendActivity.this, R.string.bad_request, Toast.LENGTH_SHORT).show();
+                            Utils.showToast(GuardRouteWiseAttendActivity.this,getResources().getString(R.string.bad_request),Toast.LENGTH_SHORT,getResources().getColor(R.color.colorPink),getResources().getColor(R.color.colorWhite));
                         } else if (response.code() == 500) {
-                            Toast.makeText(GuardRouteWiseAttendActivity.this, R.string.network_busy, Toast.LENGTH_SHORT).show();
+                            Utils.showToast(GuardRouteWiseAttendActivity.this,getResources().getString(R.string.network_busy),Toast.LENGTH_SHORT,getResources().getColor(R.color.colorPink),getResources().getColor(R.color.colorWhite));
                         } else if (response.code() == 404) {
-                            Toast.makeText(GuardRouteWiseAttendActivity.this, R.string.not_found, Toast.LENGTH_SHORT).show();
+                            Utils.showToast(GuardRouteWiseAttendActivity.this,getResources().getString(R.string.not_found),Toast.LENGTH_SHORT,getResources().getColor(R.color.colorPink),getResources().getColor(R.color.colorWhite));
                         } else {
-                            Toast.makeText(GuardRouteWiseAttendActivity.this, R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
+                            Utils.showToast(GuardRouteWiseAttendActivity.this,getResources().getString(R.string.something_went_wrong),Toast.LENGTH_SHORT,getResources().getColor(R.color.colorPink),getResources().getColor(R.color.colorWhite));
                         }
                         e.printStackTrace();
                     }

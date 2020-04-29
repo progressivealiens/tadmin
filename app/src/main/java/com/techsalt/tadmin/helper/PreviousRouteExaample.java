@@ -1,50 +1,5 @@
 package com.techsalt.tadmin.helper;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Matrix;
-import android.graphics.Paint;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
-
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
-import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.GeoPoint;
-import com.google.firebase.firestore.ListenerRegistration;
-import com.techsalt.tadmin.R;
-import com.techsalt.tadmin.model.TrackingHistoryModel;
-import com.techsalt.tadmin.views.activity.TrackingHistoryActivity;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
-import javax.annotation.Nullable;
-
-import butterknife.ButterKnife;
-
 public class PreviousRouteExaample {
 
    /* private GoogleMap mMap;
@@ -56,7 +11,7 @@ public class PreviousRouteExaample {
     List<TrackingHistoryModel> trackingHistoryModels;
     public String URL = "";
     ProgressView progressView;
-    public TrackingHistoryActivity.asyncTaskToFetchRoute fetchRouteApi;
+    public TrackingHistoryOperationsActivity.asyncTaskToFetchRoute fetchRouteApi;
 
     int totalCount = 0, iterationValue = 0;
     Bitmap markerBitmap;
@@ -91,7 +46,7 @@ public class PreviousRouteExaample {
         timeKeys = new ArrayList<>();
         trackingHistoryModels = new ArrayList<>();
         sortedTimeKeys = new ArrayList<>();
-        progressView = new ProgressView(TrackingHistoryActivity.this);
+        progressView = new ProgressView(TrackingHistoryOperationsActivity.this);
         markerBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.marker_icon);
         markerBitmap = scaleBitmap(markerBitmap, 120, 120);
     }
@@ -148,12 +103,12 @@ public class PreviousRouteExaample {
                     destLongitude = trackingHistoryModels.get(trackingHistoryModels.size() - 1).getLongi();
 
                     URL = getMapsApiDirectionsUrl();
-                    fetchRouteApi = new TrackingHistoryActivity.asyncTaskToFetchRoute(URL);
+                    fetchRouteApi = new TrackingHistoryOperationsActivity.asyncTaskToFetchRoute(URL);
                     fetchRouteApi.execute();
 
 
                 } else {
-                    Toast.makeText(TrackingHistoryActivity.this, "No Location History Found for date " + PrefData.readStringPref(PrefData.date_searched) + " .", Toast.LENGTH_LONG).show();
+                    Toast.makeText(TrackingHistoryOperationsActivity.this, "No Location History Found for date " + PrefData.readStringPref(PrefData.date_searched) + " .", Toast.LENGTH_LONG).show();
                 }
             }
         };
@@ -306,7 +261,7 @@ public class PreviousRouteExaample {
                 mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
 
             } else {
-                Toast.makeText(TrackingHistoryActivity.this, "Unable to parse Directions Data", Toast.LENGTH_LONG).show();
+                Toast.makeText(TrackingHistoryOperationsActivity.this, "Unable to parse Directions Data", Toast.LENGTH_LONG).show();
             }
 
 

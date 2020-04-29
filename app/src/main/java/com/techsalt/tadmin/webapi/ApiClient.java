@@ -10,8 +10,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class ApiClient {
-    private static OkHttpClient client;
-    private static Retrofit retrofit = null;
+    private static OkHttpClient client,clientWeather;
+    private static Retrofit retrofit = null,retrofitWeather=null;
 
     public static Retrofit getClient(Context context) {
         if (retrofit == null) {
@@ -35,5 +35,29 @@ public class ApiClient {
                     .build();
         }
         return retrofit;
+    }
+
+    public static Retrofit getClientWeather(Context context) {
+        if (retrofitWeather == null) {
+
+            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+
+            clientWeather = new OkHttpClient.Builder()
+                    .connectTimeout(30, TimeUnit.SECONDS)
+                    .writeTimeout(30, TimeUnit.SECONDS)
+                    .readTimeout(30, TimeUnit.SECONDS)
+                    .addInterceptor(logging)
+                    .addInterceptor(new ConnectivityInterceptor(context))
+                    .build();
+
+            retrofitWeather = new Retrofit.Builder()
+                    .baseUrl(Utils.BASE_WEATHER)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(clientWeather)
+                    .build();
+        }
+        return retrofitWeather;
     }
 }

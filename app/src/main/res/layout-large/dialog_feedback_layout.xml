@@ -13,11 +13,25 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <com.techsalt.tadmin.customviews.MyTextview
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:textSize="@dimen/sp_18"
+            android:textStyle="bold"
+            android:textColor="@color/colorWhite"
+            android:visibility="visible"
+            android:gravity="center"
+            android:background="@color/colorPrimary"
+            android:text="Feedback"/>
+
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_feedback"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/dp_15"/>
 
 
         <com.techsalt.tadmin.customviews.MyTextview

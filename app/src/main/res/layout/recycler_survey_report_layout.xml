@@ -2,31 +2,70 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <com.techsalt.tadmin.customviews.MyTextview
-        android:id="@+id/tv_survey_question"
+    <TextView
+        android:id="@+id/tv_serial_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="@dimen/dp_08"
+        android:textStyle="bold"
         android:textSize="@dimen/sp_16"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold"
-        android:padding="@dimen/dp_05"
-        android:layout_marginTop="@dimen/dp_05"/>
+        android:textColor="@color/colorBlack"
+        android:gravity="center"/>
 
-    <com.techsalt.tadmin.customviews.MyTextview
-        android:id="@+id/tv_survey_answer"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/sp_15"
-        android:textColor="@color/colorPrimary"
-        android:textStyle="bold"
-        android:padding="@dimen/dp_05"
-        android:layout_marginBottom="@dimen/dp_10" />
+        android:theme="@style/TextLabel"
+        app:boxStrokeColor="@color/colorBlack"
+        android:hint="Question"
+        android:textColorHint="@color/colorDarkGrey"
+        android:layout_margin="@dimen/dp_10">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_survey_question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_16"
+            android:textStyle="bold"
+            android:textColor="@color/colorLightCyan"
+            android:paddingStart="@dimen/dp_15"
+            android:paddingEnd="@dimen/dp_15"
+            android:paddingTop="@dimen/dp_10"
+            android:inputType="text"
+            android:maxLines="1"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/TextLabel"
+        app:boxStrokeColor="@color/colorBlack"
+        android:hint="Answer"
+        android:textColorHint="@color/colorDarkGrey"
+        android:layout_margin="@dimen/dp_10">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_survey_answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_15"
+            android:textColor="@color/colorLightCyan"
+            android:textStyle="bold"
+            android:paddingStart="@dimen/dp_15"
+            android:paddingEnd="@dimen/dp_15"
+            android:paddingTop="@dimen/dp_10"
+            android:inputType="text"
+            android:maxLines="1"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/colorBloodRed"/>
+        android:background="@color/colorBloodRed"
+        android:layout_marginTop="@dimen/dp_10"/>
 
 </LinearLayout>

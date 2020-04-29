@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.squareup.picasso.Picasso;
 import com.techsalt.tadmin.R;
 import com.techsalt.tadmin.customviews.MyTextview;
@@ -46,12 +47,13 @@ public class GuardPatrollingHistory extends RecyclerView.Adapter<RecyclerView.Vi
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MyViewHolder holder1 = (MyViewHolder) holder;
 
-        holder1.tvCheckpointName.setText("Checkpoint Name :- "+patrollingBeans.get(position).getCheckPointName());
-        holder1.tvRoundNo.setText("Round No :- "+patrollingBeans.get(position).getRound()+"");
-        holder1.tvBatteryStatus.setText("Battery Status :- "+patrollingBeans.get(position).getBatteryStatus());
-        holder1.tvScannedAt.setText("Scanned At :- "+patrollingBeans.get(position).getCreated_at());
+        holder1.tvSerialNumber.setText("# "+(position+1));
+        holder1.tvCheckpointName.setText(patrollingBeans.get(position).getCheckPointName());
+        holder1.tvRoundNo.setText( patrollingBeans.get(position).getRound() + "");
+        holder1.tvBatteryStatus.setText(patrollingBeans.get(position).getBatteryStatus()+" %");
+        holder1.tvScannedAt.setText(patrollingBeans.get(position).getCreated_at());
 
-        Picasso.get().load(Utils.BASE_IMAGE_GUARD_PATROLLING_HISTORY + patrollingBeans.get(position).getGuardScanImage()).resize(300,300).placeholder(R.drawable.progress_animation).into(holder1.ivPostImage);
+        Picasso.get().load(Utils.BASE_IMAGE_GUARD_PATROLLING_HISTORY + patrollingBeans.get(position).getGuardScanImage()).resize(300, 300).placeholder(R.drawable.progress_animation).into(holder1.ivPostImage);
 
         holder1.ivPostImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,20 +95,22 @@ public class GuardPatrollingHistory extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.tv_checkpoint_name)
-        MyTextview tvCheckpointName;
-        @BindView(R.id.tv_round_no)
-        MyTextview tvRoundNo;
-        @BindView(R.id.tv_battery_status)
-        MyTextview tvBatteryStatus;
-        @BindView(R.id.tv_scanned_at)
-        MyTextview tvScannedAt;
+        @BindView(R.id.et_checkpoint_name)
+        TextInputEditText tvCheckpointName;
+        @BindView(R.id.et_round_no)
+        TextInputEditText tvRoundNo;
+        @BindView(R.id.et_battery_status)
+        TextInputEditText tvBatteryStatus;
+        @BindView(R.id.et_scanned_at)
+        TextInputEditText tvScannedAt;
         @BindView(R.id.iv_post_image)
         ImageView ivPostImage;
+        @BindView(R.id.tv_serial_number)
+        MyTextview tvSerialNumber;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

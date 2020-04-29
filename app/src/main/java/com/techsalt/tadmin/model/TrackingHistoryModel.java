@@ -1,24 +1,25 @@
 package com.techsalt.tadmin.model;
 
+import java.sql.Time;
+
 public class TrackingHistoryModel {
 
 
-    String timeStamp;
+    Time timeStamp;
     double lati,longi;
 
 
-    public TrackingHistoryModel(String timeStamp, double lati, double longi) {
+    public TrackingHistoryModel(Time timeStamp, double lati, double longi) {
         this.timeStamp = timeStamp;
         this.lati = lati;
         this.longi = longi;
     }
 
-
-    public String getTimeStamp() {
+    public Time getTimeStamp() {
         return timeStamp;
     }
 
-    public void setTimeStamp(String timeStamp) {
+    public void setTimeStamp(Time timeStamp) {
         this.timeStamp = timeStamp;
     }
 

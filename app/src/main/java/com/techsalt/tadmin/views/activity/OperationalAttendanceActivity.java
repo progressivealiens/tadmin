@@ -117,9 +117,9 @@ public class OperationalAttendanceActivity extends AppCompatActivity implements 
         });
 
 
-        if (Build.VERSION.SDK_INT >=21){
+        /*if (Build.VERSION.SDK_INT >=21){
             recyclerOperationalAttend.setNestedScrollingEnabled(false);
-        }
+        }*/
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerOperationalAttend.setLayoutManager(manager);
         mAdapter = new OperationalAttendanceAdapter(this, operationalAttendanceModels);
@@ -240,13 +240,13 @@ public class OperationalAttendanceActivity extends AppCompatActivity implements 
 
                     } catch (Exception e) {
                         if (response.code() == 400) {
-                            Toast.makeText(OperationalAttendanceActivity.this, "Bad Request!! Please retry.", Toast.LENGTH_SHORT).show();
+                            Utils.showToast(OperationalAttendanceActivity.this,getResources().getString(R.string.bad_request),Toast.LENGTH_SHORT,getResources().getColor(R.color.colorPink),getResources().getColor(R.color.colorWhite));
                         } else if (response.code() == 500) {
-                            Toast.makeText(OperationalAttendanceActivity.this, "Network Busy.", Toast.LENGTH_SHORT).show();
+                            Utils.showToast(OperationalAttendanceActivity.this,getResources().getString(R.string.network_busy),Toast.LENGTH_SHORT,getResources().getColor(R.color.colorPink),getResources().getColor(R.color.colorWhite));
                         } else if (response.code() == 404) {
-                            Toast.makeText(OperationalAttendanceActivity.this, "Resource Not Found.", Toast.LENGTH_SHORT).show();
+                            Utils.showToast(OperationalAttendanceActivity.this,getResources().getString(R.string.not_found),Toast.LENGTH_SHORT,getResources().getColor(R.color.colorPink),getResources().getColor(R.color.colorWhite));
                         } else {
-                            Toast.makeText(OperationalAttendanceActivity.this, "Something went heywire!! please retry.", Toast.LENGTH_SHORT).show();
+                            Utils.showToast(OperationalAttendanceActivity.this,getResources().getString(R.string.something_went_wrong),Toast.LENGTH_SHORT,getResources().getColor(R.color.colorPink),getResources().getColor(R.color.colorWhite));
                         }
                         e.printStackTrace();
 
@@ -289,7 +289,7 @@ public class OperationalAttendanceActivity extends AppCompatActivity implements 
                     PrefData.writeStringPref(PrefData.date_searched, dateForApiFormat);
 
                     if (designationName.equalsIgnoreCase("")) {
-                        Toast.makeText(OperationalAttendanceActivity.this, R.string.please_select_designation, Toast.LENGTH_SHORT).show();
+                        Utils.showToast(OperationalAttendanceActivity.this,getResources().getString(R.string.please_select_designation),Toast.LENGTH_SHORT,getResources().getColor(R.color.colorPink),getResources().getColor(R.color.colorWhite));
                     } else {
                         connectApiToGetAttendanceOperational();
                     }
@@ -308,7 +308,7 @@ public class OperationalAttendanceActivity extends AppCompatActivity implements 
                     PrefData.writeStringPref(PrefData.date_searched, dateForApiFormat);
 
                     if (designationName.equalsIgnoreCase("")) {
-                        Toast.makeText(OperationalAttendanceActivity.this, R.string.please_select_designation, Toast.LENGTH_SHORT).show();
+                        Utils.showToast(OperationalAttendanceActivity.this,getResources().getString(R.string.please_select_designation),Toast.LENGTH_SHORT,getResources().getColor(R.color.colorPink),getResources().getColor(R.color.colorWhite));
                     } else {
                         Intent intent=new Intent(OperationalAttendanceActivity.this,OperationalAbsentActivity.class);
                         intent.putExtra("date",formatSelectedDate);
@@ -361,13 +361,13 @@ public class OperationalAttendanceActivity extends AppCompatActivity implements 
 
                     } catch (Exception e) {
                         if (response.code() == 400) {
-                            Toast.makeText(OperationalAttendanceActivity.this, R.string.bad_request, Toast.LENGTH_SHORT).show();
+                            Utils.showToast(OperationalAttendanceActivity.this,getResources().getString(R.string.bad_request),Toast.LENGTH_SHORT,getResources().getColor(R.color.colorPink),getResources().getColor(R.color.colorWhite));
                         } else if (response.code() == 500) {
-                            Toast.makeText(OperationalAttendanceActivity.this, R.string.network_busy, Toast.LENGTH_SHORT).show();
+                            Utils.showToast(OperationalAttendanceActivity.this,getResources().getString(R.string.network_busy),Toast.LENGTH_SHORT,getResources().getColor(R.color.colorPink),getResources().getColor(R.color.colorWhite));
                         } else if (response.code() == 404) {
-                            Toast.makeText(OperationalAttendanceActivity.this, R.string.not_found, Toast.LENGTH_SHORT).show();
+                            Utils.showToast(OperationalAttendanceActivity.this,getResources().getString(R.string.not_found),Toast.LENGTH_SHORT,getResources().getColor(R.color.colorPink),getResources().getColor(R.color.colorWhite));
                         } else {
-                            Toast.makeText(OperationalAttendanceActivity.this, R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
+                            Utils.showToast(OperationalAttendanceActivity.this,getResources().getString(R.string.something_went_wrong),Toast.LENGTH_SHORT,getResources().getColor(R.color.colorPink),getResources().getColor(R.color.colorWhite));
                         }
                         e.printStackTrace();
                     }

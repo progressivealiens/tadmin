@@ -6,23 +6,24 @@
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/parent_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dp_10"
         app:cardBackgroundColor="@color/colorPrimary"
         app:cardCornerRadius="@dimen/dp_10"
-        app:cardPreventCornerOverlap="true"
+        app:cardElevation="0dp"
+        app:cardMaxElevation="0dp"
         app:cardUseCompatPadding="true">
 
         <LinearLayout
+            android:id="@+id/lin_parent"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:baselineAligned="false"
             android:gravity="center"
             android:orientation="horizontal"
             android:padding="@dimen/dp_10"
-            android:weightSum="1">
+            android:weightSum="1"
+            android:baselineAligned="false">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -67,6 +68,7 @@
                 android:orientation="vertical">
 
                 <com.techsalt.tadmin.customviews.MyTextview
+                    android:id="@+id/tv_view_all_sites"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rect_round_textview"

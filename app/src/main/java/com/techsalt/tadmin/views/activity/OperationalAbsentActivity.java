@@ -136,13 +136,13 @@ public class OperationalAbsentActivity extends AppCompatActivity {
 
                     } catch (Exception e) {
                         if (response.code() == 400) {
-                            Toast.makeText(OperationalAbsentActivity.this, R.string.bad_request, Toast.LENGTH_SHORT).show();
+                            Utils.showToast(OperationalAbsentActivity.this,getResources().getString(R.string.bad_request),Toast.LENGTH_SHORT,getResources().getColor(R.color.colorPink),getResources().getColor(R.color.colorWhite));
                         } else if (response.code() == 500) {
-                            Toast.makeText(OperationalAbsentActivity.this, R.string.network_busy, Toast.LENGTH_SHORT).show();
+                            Utils.showToast(OperationalAbsentActivity.this,getResources().getString(R.string.network_busy),Toast.LENGTH_SHORT,getResources().getColor(R.color.colorPink),getResources().getColor(R.color.colorWhite));
                         } else if (response.code() == 404) {
-                            Toast.makeText(OperationalAbsentActivity.this, R.string.not_found, Toast.LENGTH_SHORT).show();
+                            Utils.showToast(OperationalAbsentActivity.this,getResources().getString(R.string.not_found),Toast.LENGTH_SHORT,getResources().getColor(R.color.colorPink),getResources().getColor(R.color.colorWhite));
                         } else {
-                            Toast.makeText(OperationalAbsentActivity.this, R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
+                            Utils.showToast(OperationalAbsentActivity.this,getResources().getString(R.string.something_went_wrong),Toast.LENGTH_SHORT,getResources().getColor(R.color.colorPink),getResources().getColor(R.color.colorWhite));
                         }
                         e.printStackTrace();
                     }

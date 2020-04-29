@@ -19,8 +19,14 @@ public class PrefData extends Application {
     private static PrefData mInstance;
     private static String sharedPrefName = "Agile_contact";
 
+    public static String firebase_token = "pref_firebase_token";
     public static String PREF_LOGINSTATUS = "pref_loginstatus";
+
     public static String PREF_Company_name = "pref_company_name";
+    public static String PREF_Company_email = "pref_company_email";
+    public static String PREF_admin_email = "pref_admin_email";
+    public static String admin_id = "pref_admin_id";
+
     public static String company_logo = "company_logo";
     public static String emp_Id = "pref_emp_Id";
     public static String route_Id = "pref_route_Id";
@@ -32,6 +38,7 @@ public class PrefData extends Application {
     public static String checkin_date = "pref_checkin_date";
     public static String checkin_image = "pref_checkin_image";
     public static String emp_name = "pref_emp_name";
+
 
 
     @Override
